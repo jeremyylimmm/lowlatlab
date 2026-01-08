@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cmath>
+#include <numeric>
 
 #include "bench/stats.hpp"
 
@@ -12,19 +13,14 @@ static uint64_t percentile(const std::vector<uint64_t>& latencies, double p) {
 }
 
 Stats bench::internal::compute_stats(std::vector<uint64_t> latencies) {
+    double N = static_cast<double>(latencies.size());
+
     std::sort(latencies.begin(), latencies.end());
 
-    uint64_t min = UINT64_MAX;
-    uint64_t max = 0;
-    double sum = 0;
+    uint64_t min = latencies.front();
+    uint64_t max = latencies.back();
 
-    for (uint64_t l : latencies) {
-        min = std::min(min, l);
-        max = std::max(max, l);
-        sum += static_cast<double>(l);
-    }
-
-    double N = static_cast<double>(latencies.size());
+    double sum = std::accumulate(latencies.begin(), latencies.end(), 0.0);
     double mean = sum / N;
 
     double sum_sq = 0.0;

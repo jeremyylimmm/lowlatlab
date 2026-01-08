@@ -5,8 +5,16 @@
 using namespace bench;
 
 int main() {
-    Result result = run("empty", 100000, []{});
-    
+    std::vector<int> v;
+
+    Result result = run("vector_push", 100000, [&]{
+        v.push_back(1);
+
+        if (v.size() > 256) {
+            v.clear();
+        }
+    });
+
     log_result(std::cout, result);
     log_result_compact(std::cout, result);
 

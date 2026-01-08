@@ -5,10 +5,14 @@
 using namespace bench;
 
 int main() {
-    Result result = run("empty", 100000, []{});
-    
+    volatile int x = 0;
+
+    Result result = run("increment", 100000, [&]{
+        x += 1;
+    });
+
     log_result(std::cout, result);
     log_result_compact(std::cout, result);
 
-    return 0;
+    return x;
 }
