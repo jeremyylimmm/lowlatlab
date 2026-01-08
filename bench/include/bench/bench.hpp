@@ -19,6 +19,8 @@ namespace bench {
         uint64_t p99_ns;
         uint64_t p99_9_ns;
 
+        double stddev_ns;
+
         size_t iterations;
         std::string name;
 
@@ -55,6 +57,7 @@ namespace bench {
             .p95_ns = stats.p95,
             .p99_ns = stats.p99,
             .p99_9_ns = stats.p99_9,
+            .stddev_ns = stats.stddev,
             .iterations = iterations,
             .name = name,
             .latencies = latencies,

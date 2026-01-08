@@ -12,6 +12,7 @@ namespace bench { namespace internal {
         uint64_t p95;
         uint64_t p99;
         uint64_t p99_9;
+        double stddev;
         double mean;
     };
 
