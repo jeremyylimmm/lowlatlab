@@ -5,7 +5,7 @@
 using namespace bench;
 
 int main() {
-    Result result = run("empty", 1000, []{});
+    Result result = run("empty", 100000, []{});
     log_result(std::cout, result);
     log_result_compact(std::cout, result);
 }

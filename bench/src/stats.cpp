@@ -11,7 +11,7 @@ static uint64_t percentile(const std::vector<uint64_t>& latencies, double p) {
     return latencies[index];
 }
 
-Stats compute_stats(std::vector<uint64_t> latencies) {
+Stats bench::internal::compute_stats(std::vector<uint64_t> latencies) {
     std::sort(latencies.begin(), latencies.end());
 
     uint64_t min = UINT64_MAX;
