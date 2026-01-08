@@ -1,23 +1,26 @@
-#include "bench.hpp"
-#include "stats.hpp"
-#include "timer.hpp"
+#include "bench/bench.hpp"
+#include "bench/stats.hpp"
 
-using namespace bench;
-using namespace internal;
+void bench::log_result(std::ostream& stream, const Result& result) {
+    stream << "Benchmark: " << result.name << " | Iterations: " << result.iterations << std::endl;
+    stream << "----------------------------------------------------------------------------";
+    stream << "min: "   << result.min_ns   << "ns" << std::endl;
+    stream << "max: "   << result.max_ns   << "ns" << std::endl;
+    stream << "mean: "  << result.mean_ns  << "ns" << std::endl;
+    stream << "p50: "   << result.p50_ns   << "ns" << std::endl;
+    stream << "p95: "   << result.p95_ns   << "ns" << std::endl;
+    stream << "p99: "   << result.p99_ns   << "ns" << std::endl;
+    stream << "p99.9: " << result.p99_9_ns << "ns" << std::endl;
+}
 
-template<typename Fn>
-Result run(const std::string& name, size_t iterations, Fn&& fn) {
-    std::vector<uint64_t> latencies(iterations);
-
-    for (size_t i = 0; i < iterations; ++i) {
-        uint64_t start = now_ns();
-
-        fn();
-
-        uint64_t end = now_ns();
-
-        
-    }
-
-    Stats stats = compute_stats(latencies);
+void bench::log_result_compact(std::ostream& stream, const Result& result) {
+    stream << result.name << " | iters=" << result.iterations <<
+    " | min="  << result.min_ns   << "ns " <<
+    " | max="  << result.max_ns   << "ns " <<
+    " | mean=" << result.mean_ns  << "ns " <<
+    "p50="     << result.p50_ns   << "ns " <<
+    "p95="     << result.p95_ns   << "ns " <<
+    "p99="     << result.p99_ns   << "ns " <<
+    "p99.9="   << result.p99_9_ns << "ns " <<
+    std::endl;
 }

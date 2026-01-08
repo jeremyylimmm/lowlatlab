@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <cmath>
 
-#include "stats.hpp"
+#include "bench/stats.hpp"
 
 using namespace bench::internal;
 

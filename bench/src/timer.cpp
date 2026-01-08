@@ -1,6 +1,6 @@
 #include <ctime>
 
-#include "timer.hpp"
+#include "bench/timer.hpp"
 
 using namespace bench::internal;
 
