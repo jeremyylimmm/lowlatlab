@@ -2,6 +2,7 @@
 
 #include <queue>
 #include <mutex>
+#include <optional>
 
 template<typename T>
 class MutexQueue {
@@ -9,18 +10,30 @@ public:
     MutexQueue() = default;
     ~MutexQueue() = default;
 
-    void enqueue(T&& item) {
+    void enqueue(T item) {
         std::lock_guard lock(_mutex);
-        _queue.push(std::forward(item));
+        _queue.push(std::move(item));
     }
 
-    bool dequeue(T& out) {
+    std::optional<T> dequeue() {
         std::lock_guard lock(_mutex);
-        out = _queue.front();
+
+        if (_queue.empty()) {
+            return std::nullopt;
+        }
+
+        T out = std::move(_queue.front());
         _queue.pop();
+
+        return out;
     }
 
-    size_t size() const {
+    bool empty() {
+        std::lock_guard lock(_mutex);
+        return _queue.empty();
+    }
+
+    size_t size() {
         std::lock_guard lock(_mutex);
         return _queue.size();
     }
