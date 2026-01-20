@@ -6,18 +6,27 @@
 #include <queue/mutex_queue.hpp>
 #include <catch2/catch_template_test_macros.hpp>
 
+template<typename Q, typename T>
+concept QueueLike = requires(Q q, T v) {
+    q.enqueue(std::move(v));
+    { q.dequeue() } -> std::same_as<std::optional<T>>;
+    { q.empty() } -> std::same_as<bool>;
+};
 
 TEMPLATE_TEST_CASE("Dequeue on empty queue", "[Queue]", MutexQueue<int>) {
+    static_assert(QueueLike<TestType, int>);
     TestType q;
     REQUIRE(q.dequeue().has_value() == false);
 }
 
 TEMPLATE_TEST_CASE("Empty queue reports empty", "[Queue]", MutexQueue<int>) {
+    static_assert(QueueLike<TestType, int>);
     TestType q;
     REQUIRE(q.empty());
 }
 
 TEMPLATE_TEST_CASE("Single item queue/dequeue", "[Queue]", MutexQueue<int>) {
+    static_assert(QueueLike<TestType, int>);
     TestType q;
 
     int x = 34;
@@ -30,6 +39,7 @@ TEMPLATE_TEST_CASE("Single item queue/dequeue", "[Queue]", MutexQueue<int>) {
 }
 
 TEMPLATE_TEST_CASE("Multiple items maintain integrity", "[Queue]", MutexQueue<int>) {
+    static_assert(QueueLike<TestType, int>);
     TestType q;
 
     size_t n = 10;
@@ -49,6 +59,7 @@ TEMPLATE_TEST_CASE("Multiple items maintain integrity", "[Queue]", MutexQueue<in
 }
 
 TEMPLATE_TEST_CASE("Move-only types work", "[Queue]", MutexQueue<std::unique_ptr<int>>) {
+    static_assert(QueueLike<TestType, std::unique_ptr<int>>);
     TestType q;
 
     size_t n = 10;
@@ -66,6 +77,7 @@ TEMPLATE_TEST_CASE("Move-only types work", "[Queue]", MutexQueue<std::unique_ptr
 }
 
 TEMPLATE_TEST_CASE("Queue is thread-safe", "[Queue]", MutexQueue<int>) {
+    static_assert(QueueLike<TestType, int>);
     TestType q;
 
     int num_producers = 4;
