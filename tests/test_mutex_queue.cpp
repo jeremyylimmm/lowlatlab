@@ -4,21 +4,21 @@
 #include <set>
 
 #include <queue/mutex_queue.hpp>
-#include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_template_test_macros.hpp>
 
 
-TEST_CASE("Dequeue on empty queue", "Mutex Queue") {
-    MutexQueue<int> q;
+TEMPLATE_TEST_CASE("Dequeue on empty queue", "[Queue]", MutexQueue<int>) {
+    TestType q;
     REQUIRE(q.dequeue().has_value() == false);
 }
 
-TEST_CASE("Empty queue reports empty", "Mutex Queue") {
-    MutexQueue<int> q;
+TEMPLATE_TEST_CASE("Empty queue reports empty", "[Queue]", MutexQueue<int>) {
+    TestType q;
     REQUIRE(q.empty());
 }
 
-TEST_CASE("Single item queue/dequeue", "Mutex Queue") {
-    MutexQueue<int> q;
+TEMPLATE_TEST_CASE("Single item queue/dequeue", "[Queue]", MutexQueue<int>) {
+    TestType q;
 
     int x = 34;
     q.enqueue(x);
@@ -29,8 +29,8 @@ TEST_CASE("Single item queue/dequeue", "Mutex Queue") {
     REQUIRE(*item == x);
 }
 
-TEST_CASE("Multiple items maintain integrity", "Mutex Queue") {
-    MutexQueue<int> q;
+TEMPLATE_TEST_CASE("Multiple items maintain integrity", "[Queue]", MutexQueue<int>) {
+    TestType q;
 
     size_t n = 10;
 
@@ -48,8 +48,8 @@ TEST_CASE("Multiple items maintain integrity", "Mutex Queue") {
     REQUIRE(q.dequeue().has_value() == false);
 }
 
-TEST_CASE("Move-only types work", "Mutex Queue") {
-    MutexQueue<std::unique_ptr<int>> q;
+TEMPLATE_TEST_CASE("Move-only types work", "[Queue]", MutexQueue<std::unique_ptr<int>>) {
+    TestType q;
 
     size_t n = 10;
 
@@ -65,8 +65,8 @@ TEST_CASE("Move-only types work", "Mutex Queue") {
     }
 }
 
-TEST_CASE("Queue is thread-safe", "Mutex Queue") {
-    MutexQueue<int> q;
+TEMPLATE_TEST_CASE("Queue is thread-safe", "[Queue]", MutexQueue<int>) {
+    TestType q;
 
     int num_producers = 4;
     int num_consumers = 4;
