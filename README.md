@@ -22,7 +22,6 @@ This project exists to explore those issues directly by:
 ## Contents
 
 ### 📦 Queues
-**[`queue/`](queue/)**
 
 Two queue implementations used to study synchronization tradeoffs:
 
@@ -45,7 +44,6 @@ Each implementation includes:
 
 
 ### 🧪 Benchmarks
-**[`bench/`](bench/)**
 
 A small benchmarking harness used across the project to:
 - measure latency distributions (p50–p99.9)
@@ -60,9 +58,7 @@ Key features:
 
 Benchmarks are intentionally separated from correctness tests.
 
-
 ### ✅ Tests
-**[`tests/`](tests/)**
 
 Unit and stress tests built with Catch2:
 - correctness under concurrency
@@ -71,7 +67,6 @@ Unit and stress tests built with Catch2:
 - termination safety
 
 Tests focus on **correctness**, not performance.
-
 
 ## Key Learnings So Far
 
