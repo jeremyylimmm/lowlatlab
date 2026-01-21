@@ -39,7 +39,7 @@ This queue is representative of structures commonly used in high-performance sys
 
 ## Benchmarks
 
-The queues are benchmarked using an external benchmarking harness to compare **steady-state streaming performance**.
+The queues are benchmarked using an external benchmarking harness to compare steady-state streaming performance.
 
 ### Benchmark setup
 
@@ -77,7 +77,7 @@ stddev: 122 µs
 
 ## Interpretation
 
-These benchmarks measure **steady-state streaming throughput**, not contention.
+These benchmarks measure steady-state streaming throughput, not contention.
 
 In this regime:
 
@@ -85,7 +85,7 @@ In this regime:
 - Lock/unlock overhead is amortized across a tight loop
 - The SPSC queue performs atomic operations and cross-core cache-line transfers on every operation
 
-As a result, the mutex queue achieves **lower mean latency** in this specific scenario.
+As a result, the mutex queue achieves lower mean latency in this specific scenario.
 
 However, the SPSC queue exhibits:
 
@@ -93,7 +93,7 @@ However, the SPSC queue exhibits:
 - Tighter latency distribution
 - No blocking or kernel involvement
 
-This makes it more suitable for **latency-sensitive systems**, where predictability and tail latency matter more than peak throughput.
+This makes it more suitable for latency-sensitive systems, where predictability and tail latency matter more than peak throughput.
 
 ## Key takeaway
 
