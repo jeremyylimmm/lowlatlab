@@ -11,25 +11,25 @@
 namespace bench {
 
     struct Result {
-        uint64_t min_ns;
-        uint64_t max_ns;
-        double   mean_ns;
-        uint64_t p50_ns;
-        uint64_t p95_ns;
-        uint64_t p99_ns;
-        uint64_t p99_9_ns;
+        double min_ns;
+        double max_ns;
+        double mean_ns;
+        double p50_ns;
+        double p95_ns;
+        double p99_ns;
+        double p99_9_ns;
 
         double stddev_ns;
 
         size_t iterations;
         std::string name;
 
-        std::vector<uint64_t> latencies;
+        std::vector<double> latencies;
     };
 
     template<typename Fn>
     Result run(const std::string& name, size_t iterations, Fn&& fn) {
-        std::vector<uint64_t> latencies(iterations);
+        std::vector<double> latencies(iterations);
 
         size_t warmup_iterations = iterations / 5;
 
@@ -38,11 +38,18 @@ namespace bench {
         }
 
         for (size_t i = 0; i < iterations; ++i) {
-            uint64_t start = internal::now_ns();
+            int64_t start = internal::now_ns();
 
             fn();
 
-            uint64_t end = internal::now_ns();
+            int64_t end   = internal::now_ns();
+
+            auto delta = end-start;
+
+            if (delta < 0) {
+                i--;
+                continue;
+            }
 
             latencies[i] = end-start;
         }

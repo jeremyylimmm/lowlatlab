@@ -6,26 +6,26 @@
 
 using namespace bench::internal;
 
-static uint64_t percentile(const std::vector<uint64_t>& latencies, double p) {
+static double percentile(const std::vector<double>& latencies, double p) {
     double rank = (p / 100.0) * (latencies.size() - 1);
     size_t index = static_cast<size_t>(std::ceil(rank));
     return latencies[index];
 }
 
-Stats bench::internal::compute_stats(std::vector<uint64_t> latencies) {
+Stats bench::internal::compute_stats(std::vector<double> latencies) {
     double N = static_cast<double>(latencies.size());
 
     std::sort(latencies.begin(), latencies.end());
 
-    uint64_t min = latencies.front();
-    uint64_t max = latencies.back();
+    double min = latencies.front();
+    double max = latencies.back();
 
     double sum = std::accumulate(latencies.begin(), latencies.end(), 0.0);
     double mean = sum / N;
 
     double sum_sq = 0.0;
 
-    for (uint64_t l : latencies) {
+    for (double l : latencies) {
         double diff = l - mean;
         sum_sq += diff * diff;
     }
