@@ -4,30 +4,20 @@
 #include <set>
 
 #include <queue/mutex_queue.hpp>
-#include <catch2/catch_template_test_macros.hpp>
+#include <catch2/catch_test_macros.hpp>
 
-template<typename Q, typename T>
-concept QueueLike = requires(Q q, T v) {
-    q.enqueue(std::move(v));
-    { q.dequeue() } -> std::same_as<std::optional<T>>;
-    { q.empty() } -> std::same_as<bool>;
-};
-
-TEMPLATE_TEST_CASE("Dequeue on empty queue", "[Queue]", MutexQueue<int>) {
-    static_assert(QueueLike<TestType, int>);
-    TestType q;
+TEST_CASE("Dequeue on empty queue", "Mutex Queue") {
+    MutexQueue<int> q;
     REQUIRE(q.dequeue().has_value() == false);
 }
 
-TEMPLATE_TEST_CASE("Empty queue reports empty", "[Queue]", MutexQueue<int>) {
-    static_assert(QueueLike<TestType, int>);
-    TestType q;
+TEST_CASE("Empty queue reports empty", "Mutex Queue") {
+    MutexQueue<int> q;
     REQUIRE(q.empty());
 }
 
-TEMPLATE_TEST_CASE("Single item queue/dequeue", "[Queue]", MutexQueue<int>) {
-    static_assert(QueueLike<TestType, int>);
-    TestType q;
+TEST_CASE("Single item queue/dequeue", "Mutex Queue") {
+    MutexQueue<int> q;
 
     int x = 34;
     q.enqueue(x);
@@ -38,9 +28,8 @@ TEMPLATE_TEST_CASE("Single item queue/dequeue", "[Queue]", MutexQueue<int>) {
     REQUIRE(*item == x);
 }
 
-TEMPLATE_TEST_CASE("Multiple items maintain integrity", "[Queue]", MutexQueue<int>) {
-    static_assert(QueueLike<TestType, int>);
-    TestType q;
+TEST_CASE("Multiple items maintain integrity", "Mutex Queue") {
+    MutexQueue<int> q;
 
     size_t n = 10;
 
@@ -58,9 +47,8 @@ TEMPLATE_TEST_CASE("Multiple items maintain integrity", "[Queue]", MutexQueue<in
     REQUIRE(q.dequeue().has_value() == false);
 }
 
-TEMPLATE_TEST_CASE("Move-only types work", "[Queue]", MutexQueue<std::unique_ptr<int>>) {
-    static_assert(QueueLike<TestType, std::unique_ptr<int>>);
-    TestType q;
+TEST_CASE("Move-only types work", "Mutex Queue") {
+    MutexQueue<std::unique_ptr<int>> q;
 
     size_t n = 10;
 
@@ -76,9 +64,8 @@ TEMPLATE_TEST_CASE("Move-only types work", "[Queue]", MutexQueue<std::unique_ptr
     }
 }
 
-TEMPLATE_TEST_CASE("Queue is thread-safe", "[Queue]", MutexQueue<int>) {
-    static_assert(QueueLike<TestType, int>);
-    TestType q;
+TEST_CASE("Queue is thread-safe", "Mutex Queue") {
+    MutexQueue<int> q;
 
     int num_producers = 4;
     int num_consumers = 4;

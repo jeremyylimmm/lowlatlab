@@ -19,6 +19,11 @@ add_executable(test_mutex_queue tests/test_mutex_queue.cpp)
 target_include_directories(test_mutex_queue PRIVATE queue/include third_party/Catch2/src)
 target_link_libraries(test_mutex_queue PRIVATE Catch2::Catch2WithMain)
 
+add_executable(test_spsc_queue tests/test_spsc_queue.cpp)
+target_include_directories(test_spsc_queue PRIVATE queue/include third_party/Catch2/src)
+target_link_libraries(test_spsc_queue PRIVATE Catch2::Catch2WithMain)
+
 include(CTest)
 include(Catch)
 catch_discover_tests(test_mutex_queue)
+catch_discover_tests(test_spsc_queue)
