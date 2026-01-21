@@ -1,8 +1,8 @@
 # lowlatlab
 
-`lowlatlab` is a collection of low-latency systems experiments written in modern C++ (C++20), focused on understanding **concurrency**, **synchronization**, and **performance tradeoffs** at a practical level.
+`lowlatlab` is a collection of low-latency systems experiments written in modern C++ (C++20), focused on understanding concurrency, synchronization, and performance tradeoffs at a practical level.
 
-The goal of this repository is not to provide a production-ready library, but to build and benchmark core primitives from first principles, with an emphasis on **measurement, correctness, and interpretation**.
+The goal of this repository is not to provide a production-ready library, but to build and benchmark core primitives from first principles, with an emphasis on measurement, correctness, and interpretation.
 
 
 ## Motivation
@@ -21,7 +21,7 @@ This project exists to explore those issues directly by:
 
 ## Contents
 
-### 📦 Queues
+### Queues
 
 Two queue implementations used to study synchronization tradeoffs:
 
@@ -40,10 +40,10 @@ Each implementation includes:
 - detailed benchmarks
 - analysis of results and tradeoffs
 
-➡️ See: [`queue/README.md`](queue/README.md)
+See: [`queue/README.md`](queue/README.md)
 
 
-### 🧪 Benchmarks
+### Benchmarks
 
 A small benchmarking harness used across the project to:
 - measure latency distributions (p50–p99.9)
@@ -58,7 +58,7 @@ Key features:
 
 Benchmarks are intentionally separated from correctness tests.
 
-### ✅ Tests
+### Tests
 
 Unit and stress tests built with Catch2:
 - correctness under concurrency
@@ -66,7 +66,7 @@ Unit and stress tests built with Catch2:
 - absence of lost or duplicated data
 - termination safety
 
-Tests focus on **correctness**, not performance.
+Tests focus on correctness, not performance.
 
 ## Key Learnings So Far
 
