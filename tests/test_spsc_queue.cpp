@@ -20,7 +20,7 @@ TEST_CASE("Single item queue/dequeue", "SPSC Queue") {
     SPSCQueue<int, 256> q;
 
     int x = 34;
-    REQUIRE(q.enqueue(std::move(x)) == true);
+    REQUIRE(q.enqueue(x) == true);
 
     auto item = q.dequeue();
 
@@ -69,11 +69,12 @@ TEST_CASE("Single producer and single consumer operate simultaenously", "SPSC Qu
     int N = 1024*1024;
 
     std::vector<int> produced_values;
+    produced_values.reserve(N);
 
     std::thread producer([&q, N, &produced_values]()
     {
         for (int i = 0; i < N; ++i) {
-            while(!q.enqueue(std::move(i))) {
+            while(!q.enqueue(i)) {
                 std::this_thread::yield();
             }
 
@@ -82,6 +83,7 @@ TEST_CASE("Single producer and single consumer operate simultaenously", "SPSC Qu
     });
 
     std::vector<int> consumed_values;
+    consumed_values.reserve(N);
 
     std::thread consumer([&q, N, &consumed_values]()
     {

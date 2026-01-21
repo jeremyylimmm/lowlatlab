@@ -12,7 +12,8 @@ public:
         : _buffer(C), _head(0), _tail(0)
     {}
 
-    bool enqueue(T&& value) {
+    template<typename U>
+    bool enqueue(U&& value) {
         const auto tail = _tail.load(std::memory_order_relaxed);
         const auto next_tail = increment(tail);
 
